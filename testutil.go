@@ -1,4 +1,4 @@
-package test
+package adventofcode2023
 
 import "testing"
 
