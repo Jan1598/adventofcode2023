@@ -1,7 +1,7 @@
 package main
 
-import "adventofcode2023/adventofcode2022/src/day01"
+import "adventofcode2023/adventofcode2022/src/day02"
 
 func main() {
-	day01.RunPartTwo()
+	day02.RunPartOne()
 }
