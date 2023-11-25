@@ -44,7 +44,7 @@ func CheckPoints(letterToCheck, letterEnemy string) int {
 	}
 
 	points := shapeToCheck.ChoosePoints
-	if shapeToCheck.Name == enemyShape.Name {
+	if IsDraw(shapeToCheck, enemyShape) {
 		points += 3
 	} else if HasWon(shapeToCheck, enemyShape) {
 		points += 6
@@ -74,15 +74,31 @@ func HasWon(shapeToCheck, shapeEnemy Shape) bool {
 
 func GetCalcValueByLetter(letterToCheck, letterEnemy string) string {
 
-	shape, err := GetShapeByLetter(letterEnemy)
+	enemyShape, err := GetShapeByLetter(letterEnemy)
 	if err != nil {
 		fmt.Println(err)
-		return ""
+		return letterToCheck
 	}
 
 	if letterToCheck == "Y" {
-		return shape.Letters[1]
+		return enemyShape.Letters[1]
+	} else if letterToCheck == "X" {
+		for _, shape := range ShapeVariants {
+			if HasWon(enemyShape, shape) {
+				return shape.Letters[1]
+			}
+		}
+	} else if letterToCheck == "Z" {
+		for _, shape := range ShapeVariants {
+			if HasWon(shape, enemyShape) {
+				return shape.Letters[1]
+			}
+		}
 	}
 
 	return letterToCheck
+}
+
+func IsDraw(shapeToCheck, shapeEnemy Shape) bool {
+	return shapeToCheck.Name == shapeEnemy.Name
 }
