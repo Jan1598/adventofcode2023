@@ -27,8 +27,9 @@ func SumOfNumbers(lines []string) int {
 func CollectNumbersInWord(word string) int {
 
 	var numbers []int
-	digitWord := ""
 
+	// Iteration left
+	digitWord := ""
 	for i := 0; i < len(word); i++ {
 		c := string(word[i])
 		digitWord += c
@@ -39,6 +40,7 @@ func CollectNumbersInWord(word string) int {
 		}
 	}
 
+	// Iteration right
 	digitWord = ""
 	for i := len(word) - 1; i >= 0; i-- {
 		c := string(word[i])
@@ -56,15 +58,12 @@ func CollectNumbersInWord(word string) int {
 	return num
 }
 
-func SwapWord(word string) string {
-	swapWord := ""
-
-	for i := len(word) - 1; i >= 0; i-- {
-		c := string(word[i])
-		swapWord += c
+func SwapWord(wordToSwap string) string {
+	word := ""
+	for i := len(wordToSwap) - 1; i >= 0; i-- {
+		word += string(wordToSwap[i])
 	}
-
-	return swapWord
+	return word
 }
 
 func GetNumberFromWord(word string, digit string) int {
@@ -80,10 +79,10 @@ func GetNumberFromWord(word string, digit string) int {
 
 	if re.MatchString(c) {
 		num, err := strconv.Atoi(c)
-
 		if err == nil {
 			return num
 		}
 	}
+	
 	return 0
 }

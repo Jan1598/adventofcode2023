@@ -6,6 +6,11 @@ import (
 	"testing"
 )
 
+func TestSwapWord(t *testing.T) {
+	adventofcode2023.AssertEquals(t, "test", day01.SwapWord("tset"))
+	adventofcode2023.AssertEquals(t, "tone", day01.SwapWord("enot"))
+}
+
 func TestCollectNumbersInWord(t *testing.T) {
 	adventofcode2023.AssertEquals(t, 23, day01.CollectNumbersInWord("t2asdasd3"))
 	adventofcode2023.AssertEquals(t, 27, day01.CollectNumbersInWord("as2asd5asd2opld27"))
