@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"adventofcode2023/adventofcode2023/src/day01"
+)
 
 func main() {
-	fmt.Println("Hello")
+	day01.RunPartOne()
 }
