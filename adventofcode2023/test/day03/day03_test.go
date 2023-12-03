@@ -3,6 +3,7 @@ package day02
 import (
 	"adventofcode2023"
 	"adventofcode2023/adventofcode2023/src/day03"
+	"adventofcode2023/helper/src"
 	"testing"
 )
 
@@ -11,7 +12,7 @@ var lines = adventofcode2023.ReadData("input_test.txt")
 func TestIsSymbolInRange(t *testing.T) {
 
 	input := []string{"...", ".1$", "...", "..."}
-	matrix := adventofcode2023.BuildStringMatrix(input)
+	matrix := src.BuildStringMatrix(input)
 
 	startCoordinate := day03.Coordinate{XValue: 0, YValue: 0}
 	endCoordinate := day03.Coordinate{XValue: 2, YValue: 1}
@@ -23,7 +24,7 @@ func TestIsSymbolInRange(t *testing.T) {
 }
 
 func TestSumOfSymbolNumbers(t *testing.T) {
-	matrix := adventofcode2023.BuildStringMatrix(lines)
+	matrix := src.BuildStringMatrix(lines)
 	adventofcode2023.AssertEquals(t, 4361, day03.SumOfSymbolNumbers(matrix))
 
 	gearMap := day03.GetGearMap()

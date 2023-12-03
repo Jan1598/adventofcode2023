@@ -8,7 +8,7 @@ type Coordinate struct {
 }
 
 var gearMap = make(map[Coordinate][]int)
-var symbols = regexp.MustCompile("^[^0-9.]+$")
+var symbolsRegex = regexp.MustCompile("^[^0-9.]+$")
 
 func IsSymbolInRange(matrix [][]string, startCoordinate, endCoordinate Coordinate, numberValue int) bool {
 
@@ -18,7 +18,7 @@ func IsSymbolInRange(matrix [][]string, startCoordinate, endCoordinate Coordinat
 	for i := startCoordinate.YValue; i <= endCoordinate.YValue; i++ {
 		for i2 := startCoordinate.XValue; i2 <= endCoordinate.XValue; i2++ {
 			d := matrix[i][i2]
-			if symbols.MatchString(d) {
+			if symbolsRegex.MatchString(d) {
 
 				symbolCoordinate := Coordinate{XValue: i2, YValue: i}
 				PersistsValueToCoordinate(symbolCoordinate, numberValue)

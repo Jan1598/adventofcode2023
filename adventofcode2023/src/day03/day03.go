@@ -2,6 +2,7 @@ package day03
 
 import (
 	"adventofcode2023"
+	"adventofcode2023/helper/src"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -12,7 +13,7 @@ func GetFileInput() []string {
 }
 
 func RunPartOne() {
-	matrix := adventofcode2023.BuildStringMatrix(GetFileInput())
+	matrix := src.BuildStringMatrix(GetFileInput())
 
 	fmt.Printf("Solution: %d", SumOfSymbolNumbers(matrix))
 }
@@ -53,7 +54,7 @@ func SumOfSymbolNumbers(matrix [][]string) int {
 }
 
 func SumOfGears(lines []string) int {
-	matrix := adventofcode2023.BuildStringMatrix(lines)
+	matrix := src.BuildStringMatrix(lines)
 	SumOfSymbolNumbers(matrix)
 
 	gearMap := GetGearMap()

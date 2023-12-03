@@ -1,4 +1,4 @@
-package adventofcode2023
+package src
 
 func BuildStringMatrix(lines []string) [][]string {
 	var matrix [][]string
