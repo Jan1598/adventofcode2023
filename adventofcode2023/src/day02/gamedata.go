@@ -1,6 +1,7 @@
 package day02
 
 import (
+	"adventofcode2023/helper/src"
 	"strconv"
 	"strings"
 )
@@ -18,15 +19,10 @@ type GameCubes struct {
 
 func CubeDataFromLine(line string) GameData {
 
-	if !strings.Contains(line, "Game") || !strings.Contains(line, ":") {
-		return GameData{}
-	}
+	textArray := src.SplitTextWithKeyWord(line, "Game")
+	id, _ := strconv.Atoi(textArray[0])
 
-	cubeText := strings.Split(line, ":")
-	idText := strings.Trim(strings.Replace(cubeText[0], "Game", "", -1), " ")
-	id, _ := strconv.Atoi(idText)
-
-	cubeSet := strings.Split(cubeText[1], ";")
+	cubeSet := strings.Split(textArray[1], ";")
 
 	var gameCubes []GameCubes
 	gameData := GameData{

@@ -1,20 +1,23 @@
 package day02
 
 import (
-	"adventofcode2023"
+	"adventofcode2023/helper/src"
 	"fmt"
 )
 
-func GetFileInput() []string {
-	return adventofcode2023.ReadData("adventofcode2023/src/day02/input.txt")
+type Day02 struct {
 }
 
-func RunPartOne() {
-	fmt.Printf("Solution: %d", SumOfPossibleSets(GetFileInput()))
+var aocDay = src.AoCDay{
+	Name: "day02",
 }
 
-func RunPartTwo() {
-	fmt.Printf("Solution: %d", SumPowerOfSets(GetFileInput()))
+func (r Day02) RunPartOne() {
+	fmt.Printf("Solution: %d", SumOfPossibleSets(aocDay.GetFileInput()))
+}
+
+func (r Day02) RunPartTwo() {
+	fmt.Printf("Solution: %d", SumPowerOfSets(aocDay.GetFileInput()))
 }
 
 func SumOfPossibleSets(lines []string) int {

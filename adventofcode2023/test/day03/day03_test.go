@@ -1,4 +1,4 @@
-package day02
+package day03
 
 import (
 	"adventofcode2023"

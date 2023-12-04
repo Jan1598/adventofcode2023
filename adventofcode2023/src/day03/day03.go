@@ -1,25 +1,27 @@
 package day03
 
 import (
-	"adventofcode2023"
 	"adventofcode2023/helper/src"
 	"fmt"
 	"regexp"
 	"strconv"
 )
 
-func GetFileInput() []string {
-	return adventofcode2023.ReadData("adventofcode2023/src/day03/input.txt")
+type Day03 struct {
 }
 
-func RunPartOne() {
-	matrix := src.BuildStringMatrix(GetFileInput())
+var aocDay = src.AoCDay{
+	Name: "day03",
+}
+
+func (r Day03) RunPartOne() {
+	matrix := src.BuildStringMatrix(aocDay.GetFileInput())
 
 	fmt.Printf("Solution: %d", SumOfSymbolNumbers(matrix))
 }
 
-func RunPartTwo() {
-	fmt.Printf("Solution: %d", SumOfGears(GetFileInput()))
+func (r Day03) RunPartTwo() {
+	fmt.Printf("Solution: %d", SumOfGears(aocDay.GetFileInput()))
 }
 
 func SumOfSymbolNumbers(matrix [][]string) int {

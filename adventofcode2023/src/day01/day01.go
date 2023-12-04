@@ -1,18 +1,21 @@
 package day01
 
 import (
-	"adventofcode2023"
+	"adventofcode2023/helper/src"
 	"fmt"
 	"regexp"
 	"strconv"
 )
 
-func GetFileInput() []string {
-	return adventofcode2023.ReadData("adventofcode2023/src/day01/input.txt")
+type Day01 struct {
 }
 
-func RunPartOne() {
-	fmt.Printf("Solution: %d", SumOfNumbers(GetFileInput()))
+var aocDay = src.AoCDay{
+	Name: "day01",
+}
+
+func (r Day01) RunPartOne() {
+	fmt.Printf("Solution: %d", SumOfNumbers(aocDay.GetFileInput()))
 }
 
 func SumOfNumbers(lines []string) int {
@@ -83,6 +86,6 @@ func GetNumberFromWord(word string, digit string) int {
 			return num
 		}
 	}
-	
+
 	return 0
 }
