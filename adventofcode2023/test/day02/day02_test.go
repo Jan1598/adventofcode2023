@@ -41,7 +41,7 @@ func TestSumOfPossibleSets(t *testing.T) {
 	adventofcode2023.AssertEquals(t, 8, result)
 }
 
-func TestPowerOfSets(t *testing.T) {
+func TestSumPowerOfSets(t *testing.T) {
 	result := day02.SumPowerOfSets(lines)
 
 	adventofcode2023.AssertEquals(t, 2286, result)
