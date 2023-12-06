@@ -1,6 +1,7 @@
 package src
 
 import (
+	"strconv"
 	"strings"
 )
 
@@ -22,4 +23,15 @@ func SplitTextWithKeyWord(input, key string) []string {
 	content := strings.Trim(cubeText[1], " ")
 
 	return []string{idText, content}
+}
+
+func MapNumberStringArrayToIntArray(numbers []string) []int {
+	var seedNumbers []int
+	for _, n := range numbers {
+		num, err := strconv.Atoi(n)
+		if err == nil {
+			seedNumbers = append(seedNumbers, num)
+		}
+	}
+	return seedNumbers
 }
