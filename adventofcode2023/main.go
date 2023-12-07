@@ -10,5 +10,7 @@ func main() {
 
 	currentDay.RunPartOne()
 	fmt.Println("")
+
+	// 2117041827 -> too high
 	currentDay.RunPartTwo()
 }

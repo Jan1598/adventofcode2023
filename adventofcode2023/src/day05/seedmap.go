@@ -2,6 +2,7 @@ package day05
 
 import (
 	"adventofcode2023/helper/src"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -78,61 +79,96 @@ func PersistsValueToSeedInput(seedMap map[string][]SeedMapInput, seedMapInput Se
 	seedMap[key] = value
 }
 
-func FillValueMap(input SeedMapInput, index int, valueMap map[int]int) {
-
-	rangeValue := input.RangeLength
-	destinationValue := input.DestinationRange
-
-	a := destinationValue
-	for i := index; i < index+rangeValue; i++ {
-		valueMap[i] = a
-		a++
-	}
-}
-
-func CreateValueMap(input []SeedMapInput) map[int]int {
-
-	valueMap := make(map[int]int)
-
-	var filledSeedInput []SeedMapInput
-
-	for i := 0; i < input[0].SourceRange+input[0].RangeLength-1; i++ {
-		for _, seedInput := range input {
-			sourceValue := seedInput.SourceRange
-			if i == sourceValue {
-				FillValueMap(seedInput, i, valueMap)
-				filledSeedInput = append(filledSeedInput, seedInput)
+func GetNumberFromSeedsByMapInput(seeds []int, input []SeedMapInput) []int {
+	var ignoredIndexes []int
+	for _, seedInput := range input {
+		sourceValue := seedInput.SourceRange
+		rangeValue := seedInput.RangeLength
+		destinationValue := seedInput.DestinationRange
+		for i, seed := range seeds {
+			if SliceIncludeValue(ignoredIndexes, i) {
+				if len(ignoredIndexes) >= len(seeds) {
+					return seeds
+				}
+				continue
+			} else if seed >= sourceValue && seed < sourceValue+rangeValue {
+				diff := seed - sourceValue
+				seeds[i] = destinationValue + diff
+				ignoredIndexes = append(ignoredIndexes, i)
 			}
 		}
 	}
 
-	if len(input) > len(filledSeedInput) {
-	outerLoop:
-		for _, seedInput := range input {
-			for _, filledSeed := range filledSeedInput {
-				if seedInput == filledSeed {
-					continue outerLoop
+	return seeds
+}
+
+func SliceIncludeValue(valueSlice []int, value int) bool {
+	for _, v := range valueSlice {
+		if v == value {
+			return true
+		}
+	}
+	return false
+}
+
+// 57451709
+var minValue = 0
+
+func GetLowestLocationByMapInput(seeds []int, seedMap map[string][]SeedMapInput) int {
+	var ignoredIndexes []int
+
+	input := seedMap[gardenValues[0]]
+
+	minSeedValue := 0
+	for _, seedInput := range input {
+		sourceValue := seedInput.SourceRange
+		rangeValue := seedInput.RangeLength
+		destinationValue := seedInput.DestinationRange
+
+		for i := 0; i < len(seeds); i += 2 {
+
+			seedStart := seeds[i]
+			seedRange := seeds[i+1]
+
+			if (seedStart+seedRange < sourceValue || seedStart > sourceValue+rangeValue) || SliceIncludeValue(ignoredIndexes, i) {
+				if len(ignoredIndexes) >= len(seeds) {
+					return minValue
+				}
+			} else {
+
+				startValue := seedStart
+
+				if seedStart < sourceValue {
+					startValue = sourceValue
+				}
+
+				if minSeedValue > startValue {
+					startValue = minSeedValue
+				}
+
+				for i2 := startValue; i2 < seedStart+seedRange; i2++ {
+
+					if i2 < minSeedValue && minSeedValue > 0 {
+						break
+					}
+
+					if i2 >= sourceValue && i2 < sourceValue+rangeValue {
+						seedValue := destinationValue + (i2 - sourceValue)
+						for _, key := range gardenValues {
+							seedValue = GetNumberFromSeedsByMapInput([]int{seedValue}, seedMap[key])[0]
+							if key == gardenValues[len(gardenValues)-1] && (seedValue < minValue || minValue == 0) {
+								minValue = seedValue
+								minSeedValue = i2
+								ignoredIndexes = append(ignoredIndexes, i)
+								fmt.Println(minValue)
+							}
+						}
+					}
 				}
 			}
-			FillValueMap(seedInput, seedInput.SourceRange, valueMap)
+
 		}
 	}
 
-	return valueMap
-}
-
-func GetNumberFromSeeds(seeds []int, valueMap map[int]int) []int {
-
-	var result []int
-	for _, i := range seeds {
-		value, ok := valueMap[i]
-
-		if ok {
-			result = append(result, value)
-		} else {
-			result = append(result, i)
-		}
-	}
-
-	return result
+	return minValue
 }
