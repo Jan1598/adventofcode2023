@@ -49,17 +49,17 @@ func PersistHandCard(cardHandMap map[int][]CardHand, cardHand CardHand) {
 	twoPair := CheckKind(hand, 2, 2)
 	onePair := CheckKind(hand, 2, 1)
 
-	if len(fiveOfAKind) > 0 {
+	if fiveOfAKind {
 		PersistsCardHandValue(cardHandMap, 1, cardHand)
-	} else if len(fourOfAKind) > 0 {
+	} else if fourOfAKind {
 		PersistsCardHandValue(cardHandMap, 2, cardHand)
-	} else if len(fullHouse) > 0 {
+	} else if fullHouse {
 		PersistsCardHandValue(cardHandMap, 3, cardHand)
-	} else if len(threeOfAKind) > 0 {
+	} else if threeOfAKind {
 		PersistsCardHandValue(cardHandMap, 4, cardHand)
-	} else if len(twoPair) > 0 {
+	} else if twoPair {
 		PersistsCardHandValue(cardHandMap, 5, cardHand)
-	} else if len(onePair) > 0 {
+	} else if onePair {
 		PersistsCardHandValue(cardHandMap, 6, cardHand)
 	} else {
 		PersistsCardHandValue(cardHandMap, 7, cardHand)
@@ -70,47 +70,88 @@ func SortHandCardGroup(handCards CardHandList) {
 	sort.Sort(handCards)
 }
 
-func CheckKind(hand string, kindAmount, amount int) []string {
+func CheckKind(hand string, kindAmount, amount int) bool {
 	letterMap := CreateLetterMap(hand)
 
-	var result []string
+	jokerAmount, _ := letterMap["J"]
+
+	if jokerAmount > 0 {
+		if kindAmount == 5 && amount == 1 {
+			if len(letterMap) == 2 && jokerAmount > 0 {
+				return true
+			}
+		} else if kindAmount == 4 && amount == 1 {
+			if len(letterMap) == 3 && jokerAmount > 1 {
+				return true
+			} else if len(letterMap) == 3 && jokerAmount > 0 {
+				for key, value := range letterMap {
+					if key != "J" && value == 3 {
+						return true
+					}
+				}
+			}
+		} else if kindAmount == 3 && amount == 1 {
+			if len(letterMap) == 4 && jokerAmount > 0 {
+				return true
+			} else if len(letterMap) == 3 && jokerAmount > 1 {
+				return true
+			}
+		} else if kindAmount == 2 && amount == 1 {
+			if len(letterMap) == 3 && jokerAmount > 0 {
+				return true
+			} else if len(letterMap) == 4 && jokerAmount > 0 {
+				return true
+			} else if len(letterMap) == 5 && jokerAmount > 0 {
+				return true
+			}
+		} else if kindAmount == 2 && amount == 2 {
+			if len(letterMap) == 3 && jokerAmount == 2 {
+				return true
+			} else if len(letterMap) == 4 && jokerAmount > 1 {
+				return true
+			}
+		}
+
+	}
+
 	i := 0
-	for key, value := range letterMap {
+	for _, value := range letterMap {
 		if value == kindAmount {
 			i++
-			result = append(result, key)
 			if i == amount {
-				return result
+				return true
 			}
 		}
 	}
 
-	return []string{}
+	return false
 }
 
-func CheckFullHouse(hand string) []string {
+func CheckFullHouse(hand string) bool {
 
 	letterMap := CreateLetterMap(hand)
 
-	if len(letterMap) > 2 {
-		return []string{}
+	jokerAmount, _ := letterMap["J"]
+
+	if len(letterMap) > 2 && jokerAmount == 0 || len(letterMap) > 3 {
+		return false
 	}
 
 	threeOfKind := ""
 	twoOfKind := ""
 	for key, value := range letterMap {
-		if value == 3 {
+		if value == 3 || (value == 2 && len(threeOfKind) <= 0 && jokerAmount > 0) {
 			threeOfKind = key
 		} else if value == 2 {
 			twoOfKind = key
 		}
 	}
 
-	if len(threeOfKind) <= 0 {
-		return []string{}
+	if len(threeOfKind) <= 0 || len(twoOfKind) <= 0 {
+		return false
 	}
 
-	return []string{threeOfKind, twoOfKind}
+	return true
 }
 
 func CreateLetterMap(word string) map[string]int {
