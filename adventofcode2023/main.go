@@ -1,12 +1,12 @@
 package main
 
 import (
-	"adventofcode2023/adventofcode2023/src/day06"
+	"adventofcode2023/adventofcode2023/src/day08"
 	"fmt"
 )
 
 func main() {
-	currentDay := day06.Day06{}
+	currentDay := day08.Day08{}
 	currentDay.RunPartOne()
 	fmt.Println("")
 	currentDay.RunPartTwo()

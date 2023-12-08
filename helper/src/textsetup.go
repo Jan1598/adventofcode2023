@@ -35,3 +35,19 @@ func MapNumberStringArrayToIntArray(numbers []string) []int {
 	}
 	return seedNumbers
 }
+
+func SplitTextByKeyWord(input, key string) []string {
+
+	if !strings.Contains(input, key) {
+		return []string{}
+	}
+
+	cubeText := strings.Split(input, key)
+	if len(cubeText) < 2 {
+		return []string{}
+	}
+	idText := strings.Trim(strings.Replace(cubeText[0], key, "", 1), " ")
+	content := strings.Trim(cubeText[1], " ")
+
+	return []string{idText, content}
+}
