@@ -39,8 +39,8 @@ func SumOfSymbolNumbers(matrix [][]string) int {
 				number += d
 			}
 			if len(number) > 0 && (len(matrix[i])-1 == i2) || (!re.MatchString(d)) {
-				startCoordinate := Coordinate{XValue: (i2 - len(number)) - 1, YValue: i - 1}
-				endCoordinate := Coordinate{XValue: i2, YValue: i + 1}
+				startCoordinate := src.Coordinate{XValue: (i2 - len(number)) - 1, YValue: i - 1}
+				endCoordinate := src.Coordinate{XValue: i2, YValue: i + 1}
 				num, err := strconv.Atoi(number)
 				if IsSymbolInRange(matrix, startCoordinate, endCoordinate, num) {
 					if err == nil {

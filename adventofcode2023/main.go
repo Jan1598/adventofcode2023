@@ -1,10 +1,10 @@
 package main
 
 import (
-	"adventofcode2023/adventofcode2023/src/day09"
+	"adventofcode2023/adventofcode2023/src/day10"
 )
 
 func main() {
-	currentDay := day09.Day09{}
+	currentDay := day10.Day10{}
 	currentDay.RunPartOne()
 }
